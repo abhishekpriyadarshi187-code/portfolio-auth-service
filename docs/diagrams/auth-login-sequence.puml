@@ -1,0 +1,14 @@
+@startuml
+actor User
+
+User -> AuthController : POST /auth/login
+AuthController -> AuthService : validate credentials
+AuthService -> UserRepository : findByUsername()
+UserRepository -> MongoDB : query user
+MongoDB --> UserRepository : user data
+UserRepository --> AuthService : user
+AuthService -> JWTService : generate token
+JWTService --> AuthService : token
+AuthService --> AuthController : login success
+AuthController --> User : JWT token
+@enduml

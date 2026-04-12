@@ -1,4 +1,4 @@
-package com.abhishek.portfolio.auth_service;
+package com.abhishek.portfolio.auth;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

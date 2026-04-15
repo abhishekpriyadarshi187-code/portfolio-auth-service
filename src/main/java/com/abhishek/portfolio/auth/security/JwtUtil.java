@@ -18,8 +18,8 @@ public class JwtUtil {
     public String generateToken(String userId, String email, String role) {
 
         return Jwts.builder()
-                .setSubject(email)
-                .claim("userId", userId)
+                .setSubject(userId)
+                .claim("email", email)
                 .claim("role", role)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
@@ -27,7 +27,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractEmail(String token) {
+    public String extractUserId(String token) {
         return extractAllClaims(token).getSubject();
     }
 
@@ -50,6 +50,10 @@ public class JwtUtil {
 
     public String extractRole(String token) {
         return extractAllClaims(token).get("role", String.class);
+    }
+
+    public String extractEmail(String token) {
+        return extractAllClaims(token).get("email", String.class);
     }
 
 }

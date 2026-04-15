@@ -37,7 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (jwtUtil.isTokenValid(token)) {
 
                 // Step 3: Extract data from token
-                String email = jwtUtil.extractEmail(token);
+                String userId = jwtUtil.extractUserId(token);
                 String role = jwtUtil.extractRole(token); // make sure you added this method
 
                 // Step 4: Create authorities
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // Step 5: Create authentication object
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                email,     // principal
+                                userId,     // principal
                                 null,      // credentials
                                 authorities
                         );

@@ -63,7 +63,7 @@ public class AuthServiceImpl implements AuthService {
                 .userId(savedUser.getUserId())
                 .email(savedUser.getEmail())
                 .role(savedUser.getRole())
-                .role(savedUser.getFullName())
+                .fullName(savedUser.getFullName())
                 .build();
     }
 

@@ -1,8 +1,5 @@
 package com.abhishek.portfolio.auth.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -22,18 +19,19 @@ public class User {
     private String id;
 
     @Indexed(unique = true)
-    @NotBlank(message = "Email cannot be empty")
-    @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Full name cannot be empty")
-    @Size(min = 2, max = 100, message = "Full name must be between 2 and 100 characters")
+    @Indexed(unique = true)
+    private String mobileNumber;
+
     private String fullName;
 
-    @NotBlank(message = "Password cannot be empty")
+    /**
+     * BCrypt-encoded password.
+     * Never store the raw password.
+     */
     private String password;
 
-    @NotBlank(message = "Role cannot be empty")
     private String role;
 
     @Indexed(unique = true)
@@ -46,13 +44,17 @@ public class User {
     private boolean accountNonLocked = true;
 
     @Builder.Default
+    private boolean emailVerified = false;
+
+    @Builder.Default
+    private boolean mobileNumberVerified = false;
+
+    @Builder.Default
     private boolean twoFactorEnabled = false;
 
     private String twoFactorSecret;
 
     private LocalDateTime createdAt;
-
     private LocalDateTime updatedAt;
-
     private LocalDateTime lastLoginAt;
 }

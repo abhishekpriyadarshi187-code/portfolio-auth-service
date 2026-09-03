@@ -1,5 +1,6 @@
 package com.abhishek.portfolio.auth.dto;
 
+import com.abhishek.portfolio.auth.validation.StrongPassword;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -9,19 +10,25 @@ import lombok.Data;
 @Data
 public class RegisterRequest {
 
-    @NotBlank(message = "Email cannot be blank")
+    @NotBlank(message = "Email cannot be empty")
     @Email(message = "Invalid email format")
     private String email;
 
-    @NotBlank(message = "Full name cannot be blank")
-    @Size(min = 2, max = 100, message = "Full name must be between 2 and 100 characters")
+    @NotBlank(message = "Mobile number cannot be empty")
+    @Pattern(
+            regexp = "^\\+[1-9]\\d{7,14}$",
+            message = "Mobile number must be in international format, for example +919876543210"
+    )
+    private String mobileNumber;
+
+    @NotBlank(message = "Full name cannot be empty")
+    @Size(
+            min = 2,
+            max = 100,
+            message = "Full name must be between 2 and 100 characters"
+    )
     private String fullName;
 
-    @NotBlank(message = "Password cannot be blank")
-    @Size(min = 8, message = "Password must be at least 8 characters")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!]).*$",
-            message = "Password must contain uppercase, lowercase, number and special character"
-    )
+    @StrongPassword
     private String password;
 }

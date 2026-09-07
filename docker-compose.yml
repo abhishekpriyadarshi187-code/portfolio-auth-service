@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mongodb:
     image: mongo:7
@@ -8,16 +6,29 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - portfolio-network
 
   auth-service:
     build: .
+    image: portfolio-auth-service:local
     container_name: portfolio-auth-service
     ports:
       - "8081:8081"
     depends_on:
       - mongodb
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/auth_db
+      SPRING_PROFILES_ACTIVE: local
+      MONGODB_URI: mongodb://mongodb:27017/test
+      JWT_SECRET: my-secret-key-my-secret-key-my-secret-key
+      JWT_EXPIRATION_MS: 3600000
+      CORS_ALLOWED_ORIGINS: http://localhost:5173,http://localhost:5174
+    networks:
+      - portfolio-network
 
 volumes:
   mongo_data:
+
+networks:
+  portfolio-network:
+    external: true

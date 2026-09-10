@@ -6,11 +6,9 @@ pipeline {
     }
 
     stages {
-        stage('Verify Jenkins Pipeline') {
+        stage('Build and Verify') {
             steps {
-                echo 'Jenkins pipeline is running successfully for portfolio-auth-service'
-                sh 'java -version'
-                sh './mvnw -version'
+                sh './mvnw clean verify'
             }
         }
     }

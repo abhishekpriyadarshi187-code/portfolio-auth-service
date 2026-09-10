@@ -27,5 +27,19 @@ pipeline {
                 '''
             }
         }
+
+        stage('Trivy Security Scan') {
+            steps {
+                sh '''
+                    echo "Scanning Docker image: portfolio-auth-service:${IMAGE_TAG}"
+
+                    trivy image \
+                      --scanners vuln \
+                      --severity HIGH,CRITICAL \
+                      --exit-code 1 \
+                      portfolio-auth-service:${IMAGE_TAG}
+                '''
+            }
+        }
     }
 }

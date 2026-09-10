@@ -11,5 +11,12 @@ pipeline {
                 sh './mvnw clean verify'
             }
         }
+
+        stage('Verify Docker Access') {
+            steps {
+                sh 'docker --version'
+                sh 'docker info'
+            }
+        }
     }
 }
